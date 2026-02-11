@@ -65,6 +65,7 @@ export const validateUserInput = async (
   next: NextFunction,
 ) => {
   await body("nombre")
+    .trim()
     .notEmpty()
     .withMessage("El nombre es obligatorio")
     .run(req);
