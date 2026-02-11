@@ -2,8 +2,11 @@ import express from 'express'
 import { validateUserId, validateUserInput } from '../middleware/user';
 import { handleInputErrors } from '../middleware/validation';
 import { UserController } from '../controller/userController';
+import { limiter } from '../config/limiter';
 
 const router = express.Router();
+
+router.use(limiter);
 
 router.post('/', validateUserInput, handleInputErrors, UserController.create);
 
