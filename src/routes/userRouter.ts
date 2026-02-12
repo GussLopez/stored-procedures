@@ -6,13 +6,12 @@ import { limiter } from '../config/limiter';
 
 const router = express.Router();
 
-router.use(limiter);
 
-router.post('/', validateUserInput, handleInputErrors, UserController.create);
+router.post('/', limiter, validateUserInput, handleInputErrors, UserController.create);
 
 router.get('/', UserController.getAllNames);
 
-router.put('/:id', validateUserId, handleInputErrors, UserController.updateById);
+router.put('/:id', limiter, validateUserId, handleInputErrors, UserController.updateById);
 
 router.delete('/:id', validateUserId, UserController.deleteById);
 export default router;
