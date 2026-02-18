@@ -13,5 +13,5 @@ router.get('/', UserController.getAllNames);
 
 router.put('/:id', limiter, validateUserId, handleInputErrors, UserController.updateById);
 
-router.delete('/:id', validateUserId, UserController.deleteById);
+router.delete('/:id', limiter, validateUserId, UserController.deleteById);
 export default router;
