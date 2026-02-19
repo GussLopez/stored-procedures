@@ -9,7 +9,7 @@ export const corsConfig: CorsOptions = {
         "http://localhost:3000",
       );
     }
-    if (!origin && whiteList.includes(origin)) {
+    if (origin && whiteList.includes(origin)) {
       callback(null, true);
     } else {
       console.error(`CORS Error: Origin ${origin} not allowed`);
