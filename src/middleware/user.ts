@@ -65,10 +65,20 @@ export const validateUserInput = async (
   next: NextFunction,
 ) => {
   await body("nombre")
+    .exists()
+    .withMessage("El nombre es obligatorio")
+    .bail()
+    .isString()
+    .withMessage("El nombre debe ser texto")
+    .bail()
     .trim()
     .notEmpty()
-    .withMessage("El nombre es obligatorio")
+    .withMessage("El nombre no puede estar vacío")
+    .bail()
+    .isLength({ min: 2, max: 50 })
+    .withMessage("El nombre debe tener entre 2 y 50 caracteres")
     .run(req);
 
   next();
 };
+
