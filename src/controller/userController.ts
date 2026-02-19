@@ -6,7 +6,6 @@ export class UserController {
       const { nombre } = req.body;
 
       const nuevoUsuario = await User.create({ nombre });
-      console.log(nuevoUsuario);
       res.status(201).json({
         message: "Usuario creado",
         usuario: nuevoUsuario,
@@ -21,6 +20,7 @@ export class UserController {
     try {
       const names = await User.findAll({
         order: [["createdAt", "DESC"]],
+        attributes: ["id", "nombre"]
       });
       res.status(200).json(names);
     } catch (error) {
