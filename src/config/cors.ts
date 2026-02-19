@@ -3,17 +3,18 @@ import type { CorsOptions } from "cors";
 export const corsConfig: CorsOptions = {
   origin: (origin, callback) => {
     const whiteList = [process.env.FRONTEND_URL].filter(Boolean);
-    if (process.env.NODE_ENV === "development" || process.argv[2] === "--api") {
-      whiteList.push(
-        undefined,
-        "http://localhost:3000",
-      );
+
+    // Permitir requests sin origin (server-to-server)
+    if (!origin) {
+      return callback(null, true);
     }
-    if (origin && whiteList.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.error(`CORS Error: Origin ${origin} not allowed`);
-      callback(new Error(`Error de CORS: Origen ${origin} no permitido`));
+
+    if (whiteList.includes(origin)) {
+      return callback(null, true);
     }
+
+    console.error(`CORS Error: Origin ${origin} not allowed`);
+    return callback(new Error(`Error de CORS: Origen ${origin} no permitido`));
   },
 };
+
