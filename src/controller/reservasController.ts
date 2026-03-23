@@ -36,4 +36,43 @@ export class ReservasController {
       res.status(500).json({ error: "Error al obtener las reservas" });
     }
   };
+
+  static editarReserva = async (req: Request, res: Response) => {
+    try {
+      const { reservaId } = req.params;
+      const { fecha, noches, status, hotelId, userId } = req.body;
+
+      await db.query(
+        `SELECT editar_reserva(:id, :fecha, :noches, :status, :hotelId, :userId)`,
+        {
+          replacements: {
+            id: reservaId,
+            fecha,
+            noches,
+            status,
+            hotelId,
+            userId,
+          },
+        },
+      );
+
+      res.status(201).json({ mensaje: "Reservación modificada" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error al editar la reservación" });
+    }
+  };
+
+  static eliminarReserva = async (req: Request, res: Response) => {
+    const { reservaId } = req.params;
+    console.log(req.params);
+    try {
+      await db.query(`SELECT eliminar_reserva(${reservaId})`);
+
+      res.status(201).json({ mensaje: "Reserva eliminada" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error al eliminar la reservación" });
+    }
+  };
 }
