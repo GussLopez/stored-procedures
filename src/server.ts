@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import { db } from "./config/db";
-import userRouter from "./routes/userRouter";
+import reservasRouter from "./routes/reservasRouter";
 import cors from "cors";
 import { corsConfig } from "./config/cors";
 
@@ -23,6 +23,6 @@ app.use(cors(corsConfig));
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use("/api/usuario", userRouter);
+app.use("/api/reservas", reservasRouter);
 
 export default app;

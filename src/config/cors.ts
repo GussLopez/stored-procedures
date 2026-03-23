@@ -4,7 +4,6 @@ export const corsConfig: CorsOptions = {
   origin: (origin, callback) => {
     const whiteList = [process.env.FRONTEND_URL].filter(Boolean);
 
-    // Permitir requests sin origin (server-to-server)
     if (!origin) {
       return callback(null, true);
     }
