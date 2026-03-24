@@ -26,6 +26,25 @@ export class ReservasController {
     }
   };
 
+  static obtenerPorId = async (req: Request, res: Response) => {
+    const { reservaId } = req.params;
+
+    try {
+      const [data] = await db.query(`SELECT * FROM consultar_reserva(:id)`,
+        {
+          replacements: {
+            id: reservaId
+          }
+        }
+      )
+
+      res.status(200).json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al obtener la reserva' })
+    }
+  }
+
   static obtenerReservas = async (req: Request, res: Response) => {
     try {
       const [data] = await db.query(`SELECT * FROM obtener_reservas()`);
